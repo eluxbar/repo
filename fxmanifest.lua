@@ -7,5 +7,6 @@ client_scripts {
 
 server_scripts {
     "@vrp/lib/utils.lua",
-    "modules/sv_casinocoinflip.lua"
+    "modules/sv_casinocoinflip.lua",
+    "modules/sv_webhooks.lua",
 }
