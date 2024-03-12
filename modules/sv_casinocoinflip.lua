@@ -17,6 +17,13 @@ local coinflipGameData = {}
 
 local betId = 0
 
+local MySQL = module("modules/MySQL")
+MySQL.createCommand("casinochips/add_id_chips", "INSERT IGNORE INTO vrp_chips SET user_id = @user_id")
+MySQL.createCommand("casinochips/get_chips","SELECT * FROM vrp_chips WHERE user_id = @user_id")
+MySQL.createCommand("casinochips/add_chips", "UPDATE vrp_chips SET chips = (chips + @amount) WHERE user_id = @user_id")
+MySQL.createCommand("casinochips/remove_chips", "UPDATE vrp_chips SET chips = CASE WHEN ((chips - @amount)>0) THEN (chips - @amount) ELSE 0 END WHERE user_id = @user_id")
+
+
 function giveChips(source,amount)
     local user_id = vRP.getUserId(source)
     MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
